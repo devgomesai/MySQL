@@ -8,7 +8,7 @@
             "database": "dvdrental",
             "username": "postgres",
             "password": "Mphasis123",
-            "name": "demo"
+            "name": "dvdrental"
         }
     ]
 }
