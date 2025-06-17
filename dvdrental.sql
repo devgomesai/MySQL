@@ -221,11 +221,11 @@
 
 -- SELECT MAX(replacement_cost), MIN(replacement_cost) FROM film; 
 
--- ╔══════════════════════════════════════════════════════════════╗
--- ║  AVG() => gives floating value to round it use ROUND(val,no) ║
--- ║   no in ROUND tells till what decimal value                  ║
--- ╠═══════════════════════════════════════════════════════════════╣
--- 
+-- ╔════════════════════════════════════════════════════════════════════╗
+-- ║  AVG() => gives floating value; to round it use ROUND(val, no)     ║
+-- ║  'no' in ROUND tells how many decimal places to keep              ║
+-- ╠════════════════════════════════════════════════════════════════════╣
+
 -- no in ROUND tells till what decimal value 
 
 -- SELECT ROUND(AVG(replacement_cost),3) FROM film;
@@ -390,13 +390,101 @@
 -- ╔════════════════════════════════════════════╗
 -- ║            LEFT OUTER JOIN                 ║
 -- ╠════════════════════════════════════════════╣
-SELECT * FROM inventory;
+-- SELECT f.film_id, title, inventory_id, store_id
+-- FROM film f
+-- LEFT JOIN inventory i ON
+-- f.film_id = i.film_id
+-- WHERE i.inventory_id is NULL;
 
+-- ╔════════════════════════════════════════════╗
+-- ║           RIGHT OUTER JOIN                 ║
+-- ╠════════════════════════════════════════════╣
+-- SELECT f.film_id, title, inventory_id, store_id
+-- FROM film f
+-- RIGHT OUTER JOIN inventory i ON
+-- f.film_id = i.film_id
+-- WHERE i.inventory_id is NULL;
 
+-- ╔════════════════════════════════════════════╗
+-- ║              🔥 CHALLENGE  🔥              ║
+-- ╠════════════════════════════════════════════╣
+-- ║ Welcome to the arena where queries get tough║
+-- ║ and only optimized logic survives! ⚔️       ║
+-- ╚════════════════════════════════════════════╝
+-- Q1. What are the emails of the customers who live in California ?
+-- SELECT a.district, c.email FROM
+-- customer c JOIN address a ON
+-- a.address_id = c.address_id
+-- WHERE a.district = 'California';
 
+-- Q2. Get the list of all the movies "Nick Wahlberg" has been in ?
+-- SELECT f.title, b.first_name, b.last_name FROM film f
+-- JOIN film_actor a ON
+-- f.film_id = a.film_id JOIN
+-- actor b ON
+-- b.actor_id = a.actor_id
+-- WHERE b.first_name = 'Nick' and b.last_name = 'Wahlberg';
 
+-- ╔══════════════════════════════════════════════════════════════════╗
+-- ║                        Advanced SQL Topics                       ║
+-- ║     (Math Functions, String Functions, Sub-Queries, Self-Join)   ║
+-- ╚══════════════════════════════════════════════════════════════════╝
+-- SHOW TIMEZONE;   
 
+-- SELECT NOW();
 
+-- SELECT TIMEOFDAY();
+
+-- SELECT CURRENT_TIME;
+
+-- SELECT CURRENT_DATE;
+
+-- ╔══════════════════════════════════════════════════════════════════╗
+-- ║              Extracting info from time based type                ║
+-- ║                  EXTRACT() AGE() TO_CHAR()                       ║
+-- ╚══════════════════════════════════════════════════════════════════╝
+-- Eg: 2007-02-15
+--- EXTRACT() => extracts info from existing like day from the date including all i.e year month day ,etc
+-- 15
+-- SELECT EXTRACT(DAY FROM payment_date) as day
+-- from payment;
+
+-- 02
+-- SELECT EXTRACT(MONTH FROM payment_date) as month
+-- from payment;
+
+-- 2007 
+-- SELECT EXTRACT(YEAR FROM payment_date) as year
+-- from payment;
+
+-- SELECT payment_id, EXTRACT(QUARTER FROM payment_date) AS pay_quarter
+-- FROM payment;
+
+-- SELECT EXTRACT(HOUR FROM payment_date),EXTRACT(MINUTE FROM payment_date),EXTRACT(SECOND FROM payment_date)
+-- FROM payment;
+
+-- SELECT AGE(payment_date) FROM
+-- payment;
+
+-- SELECT TO_CHAR(payment_date, 'month-YYYY') FROM
+-- payment;
+
+-- SELECT NOW();
+
+-- SELECT TO_CHAR(payment_date, 'DD || MM || YYY ') from payment;
+-- ╔════════════════════════════════════════════╗
+-- ║              🔥 CHALLENGE  🔥              ║
+-- ╠════════════════════════════════════════════╣
+-- ║ Welcome to the arena where queries get tough║
+-- ║ and only optimized logic survives! ⚔️       ║
+-- ╚════════════════════════════════════════════╝
+-- Q1. During which months did payments occur? Format the answer to return the full month name?
+-- SELECT DISTINCT(TO_CHAR(payment_date, 'MON')) as Months FROM payment;
+
+-- Q2. How many payments occurred on a Monday?
+ SELECT COUNT(*) FROM payment
+ WHERE TRIM(TO_CHAR(payment_date, 'DAY')) = 'MONDAY'
+ GROUP BY 1; 
 
 
 
