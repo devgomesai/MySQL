@@ -32,8 +32,8 @@ SELECT * FROM facilities f
 WHERE f.facid in (1,5);
 -- Q7. How can you produce a list of members who joined after the start of September 2012?
 --     Return the memid, surname, firstname, and joindate of the members in question.
-SELECT * FROM members m
-WHERE m.joindate > '2012-09-01'
+SELECT m.memid, m.surname, m.firstname, m.joindate FROM members m
+WHERE m.joindate >= '2012-09-01'
 LIMIT 8;
 
 -- Q8. How can you produce an ordered list of the first 10 surnames in the members table?
@@ -44,9 +44,8 @@ ORDER BY m.surname
 LIMIT 10;
 
 -- Q9. You'd like to get the signup date of your last member. How can you retrieve this information?
-SELECT m.joindate FROM members m 
-ORDER BY m.memid DESC
-LIMIT 1;
+SELECT MAX(m.joindate) AS last_signup_date
+FROM members m;
 
 -- Q10. Produce a count of the number of facilities that have a cost to guests of 10 or more.
 SELECT COUNT(*) FROM facilities f 
